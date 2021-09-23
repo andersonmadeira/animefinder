@@ -6,112 +6,21 @@ import { gql } from '@apollo/client'
 import client from '../apollo-client'
 
 import styles from '../styles/Home.module.css'
+import { GET_HOME_PAGE_DETAILS } from '../operations/queries'
+import { HomePageDetails } from '../operations/queries/__generated__/HomePageDetails'
 
-const Home: NextPage<{ data: MediaFragment }> = ({ data }) => {
+export interface PageProps {
+  data: HomePageDetails
+}
+
+const Home: NextPage<PageProps> = ({ data }) => {
   console.log('data', data)
-  console.log('data.popular', data.popular)
   return <div>Home page</div>
 }
 
-export const mediaFragment = gql`
-  fragment media on Media {
-    id
-    title {
-      userPreferred
-    }
-    coverImage {
-      extraLarge
-      large
-      color
-    }
-    startDate {
-      year
-      month
-      day
-    }
-    endDate {
-      year
-      month
-      day
-    }
-    bannerImage
-    season
-    description
-    type
-    format
-    status(version: 2)
-    episodes
-    duration
-    chapters
-    volumes
-    genres
-    isAdult
-    averageScore
-    popularity
-    mediaListEntry {
-      id
-      status
-    }
-    nextAiringEpisode {
-      airingAt
-      timeUntilAiring
-      episode
-    }
-    studios(isMain: true) {
-      edges {
-        isMain
-        node {
-          id
-          name
-        }
-      }
-    }
-  }
-`
-
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await client.query({
-    query: gql`
-      query ($season: MediaSeason, $seasonYear: Int, $nextSeason: MediaSeason, $nextYear: Int) {
-        trending: Page(page: 1, perPage: 6) {
-          media(sort: TRENDING_DESC, type: ANIME, isAdult: false) {
-            ...media
-          }
-        }
-        season: Page(page: 1, perPage: 6) {
-          media(
-            season: $season
-            seasonYear: $seasonYear
-            sort: POPULARITY_DESC
-            type: ANIME
-            isAdult: false
-          ) {
-            ...media
-          }
-        }
-        nextSeason: Page(page: 1, perPage: 6) {
-          media(
-            season: $nextSeason
-            seasonYear: $nextYear
-            sort: POPULARITY_DESC
-            type: ANIME
-            isAdult: false
-          ) {
-            ...media
-          }
-        }
-        popular: Page(page: 1, perPage: 6) {
-          media(sort: POPULARITY_DESC, type: ANIME, isAdult: false) {
-            ...media
-          }
-        }
-        top: Page(page: 1, perPage: 10) {
-          media(sort: SCORE_DESC, type: ANIME, isAdult: false) {
-            ...media
-          }
-        }
-      }
-    `,
+    query: GET_HOME_PAGE_DETAILS,
     variables: {
       type: 'ANIME',
       season: 'SUMMER',

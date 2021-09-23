@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "schema:download": "apollo service:download --endpoint=https://graphql.anilist.co graphql-schema.json",
+    "precodegen:generate": "yarn schema:download",
+    "codegen:generate": "apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --tagName=gql --includes operations/**/*.{ts,tsx,js,jsx,graphql}"
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
@@ -17,8 +20,10 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/graphql": "^14.5.0",
     "@types/react": "17.0.22",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "apollo": "^2.33.6",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "eslint-config-prettier": "^8.3.0",
