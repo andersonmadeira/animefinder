@@ -1,31 +1,94 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
-import { gql } from '@apollo/client'
-
-import styled from 'styled-components'
-
-import client from '../apollo-client'
 
 import { GET_HOME_PAGE_DETAILS } from '../operations/queries'
 import { HomePageDetails } from '../operations/queries/__generated__/HomePageDetails'
 import { Layout } from '../components'
+import client from '../apollo-client'
+import { Card, HorizontalMediaList, ListTitle, MediaListSection } from './styles'
 
 export interface PageProps {
   data: HomePageDetails
 }
 
-const Title = styled.h1<{ color?: string }>`
-  color: ${({ color }) => color || 'blue'};
-`
-
 const Home: NextPage<PageProps> = ({ data }) => {
-  console.log('data', data)
   return (
     <Layout>
-      <Title color="red">Red title</Title>
-      <Title>Blue title</Title>
+      <MediaListSection>
+        <ListTitle>Trending Now</ListTitle>
+        <HorizontalMediaList>
+          {data.trending?.media?.map(m => (
+            <Card key={m?.id}>
+              <Image
+                src={m?.coverImage?.large || ''}
+                alt={m?.title?.userPreferred || ''}
+                width={172}
+                height={259}
+              />
+            </Card>
+          ))}
+        </HorizontalMediaList>
+      </MediaListSection>
+      <MediaListSection>
+        <ListTitle>This season</ListTitle>
+        <HorizontalMediaList>
+          {data.season?.media?.map(m => (
+            <Card key={m?.id}>
+              <Image
+                src={m?.coverImage?.large || ''}
+                alt={m?.title?.userPreferred || ''}
+                width={172}
+                height={259}
+              />
+            </Card>
+          ))}
+        </HorizontalMediaList>
+      </MediaListSection>
+      <MediaListSection>
+        <ListTitle>Next Season</ListTitle>
+        <HorizontalMediaList>
+          {data.nextSeason?.media?.map(m => (
+            <Card key={m?.id}>
+              <Image
+                src={m?.coverImage?.large || ''}
+                alt={m?.title?.userPreferred || ''}
+                width={172}
+                height={259}
+              />
+            </Card>
+          ))}
+        </HorizontalMediaList>
+      </MediaListSection>
+      <MediaListSection>
+        <ListTitle>Most Popular</ListTitle>
+        <HorizontalMediaList>
+          {data.popular?.media?.map(m => (
+            <Card key={m?.id}>
+              <Image
+                src={m?.coverImage?.large || ''}
+                alt={m?.title?.userPreferred || ''}
+                width={172}
+                height={259}
+              />
+            </Card>
+          ))}
+        </HorizontalMediaList>
+      </MediaListSection>
+      <MediaListSection>
+        <ListTitle>Top Anime</ListTitle>
+        <HorizontalMediaList>
+          {data.top?.media?.map(m => (
+            <Card key={m?.id}>
+              <Image
+                src={m?.coverImage?.large || ''}
+                alt={m?.title?.userPreferred || ''}
+                width={172}
+                height={259}
+              />
+            </Card>
+          ))}
+        </HorizontalMediaList>
+      </MediaListSection>
     </Layout>
   )
 }
