@@ -3,19 +3,31 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { gql } from '@apollo/client'
+
+import styled from 'styled-components'
+
 import client from '../apollo-client'
 
-import styles from '../styles/Home.module.css'
 import { GET_HOME_PAGE_DETAILS } from '../operations/queries'
 import { HomePageDetails } from '../operations/queries/__generated__/HomePageDetails'
+import { Layout } from '../components'
 
 export interface PageProps {
   data: HomePageDetails
 }
 
+const Title = styled.h1<{ color?: string }>`
+  color: ${({ color }) => color || 'blue'};
+`
+
 const Home: NextPage<PageProps> = ({ data }) => {
   console.log('data', data)
-  return <div>Home page</div>
+  return (
+    <Layout>
+      <Title color="red">Red title</Title>
+      <Title>Blue title</Title>
+    </Layout>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {

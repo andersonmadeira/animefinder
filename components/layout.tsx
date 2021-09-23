@@ -1,9 +1,23 @@
 import React from 'react'
+import { createGlobalStyle } from 'styled-components'
 
-import styles from './layout.module.css'
+export const GlobalStyle = createGlobalStyle`
+  html,
+  body {
+    padding: 0;
+    margin: 0;
 
-const Layout: React.FC = ({ children }) => {
-  return <div className={styles.container}>{children}</div>
+    * {
+      box-sizing: border-box;
+    }
+  }
+`
+
+export const Layout: React.FC = ({ children }) => {
+  return (
+    <>
+      <GlobalStyle />
+      {children}
+    </>
+  )
 }
-
-export default Layout
