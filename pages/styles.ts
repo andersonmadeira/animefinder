@@ -7,7 +7,7 @@ export const Card = styled.div`
 
   position: relative;
   display: inline-block;
-  opacity: 0.85;
+  opacity: 0.9;
   transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   font-size: 0; // bit.ly/39tUQqi
@@ -15,7 +15,7 @@ export const Card = styled.div`
   cursor: pointer;
 
   :hover {
-    transform: scale(1.1, 1.1);
+    transform: scale(1.05, 1.05);
     opacity: 1;
   }
 
@@ -25,7 +25,7 @@ export const Card = styled.div`
 `
 
 export const MediaListSection = styled.section`
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 `
 
 export const HorizontalMediaList = styled.div`
@@ -41,4 +41,17 @@ export const ListTitle = styled.h3`
   text-transform: uppercase;
   font-weight: 600;
   font-size: 16px;
+`
+
+export const MediaWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 172px;
+  height: auto;
+`
+
+export const MediaTitle = styled.span`
+  font-size: 12px;
+  font-weight: 600;
 `
